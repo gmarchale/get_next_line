@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:11:13 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/11/21 19:07:58 by gmarchal         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:00:21 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strdup(const char *s1)
 	return (ret);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -64,7 +64,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	ret = malloc (sizeof(char const) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	ret = malloc (sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!ret)
 		return (0);
 	i = 0;
@@ -81,7 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	ret[j] = '\0';
-	//rajouter un free
+	free(s1);
 	return (ret);
 }
 
