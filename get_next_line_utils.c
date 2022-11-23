@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:11:13 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/11/22 15:00:21 by gmarchal         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:08:06 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 int	ft_strlen(const char *s)
 {
 	int	i;
+
+	if (!s)
+		return (0);
 
 	i = 0;
 	while (s[i])
@@ -36,23 +39,26 @@ void	ft_bzero(void *s, int n)
 	}
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup_mod(char *s1)
 {
 	int		i;
 	int		len;
 	char	*ret;
 
-	i = 0;
-	len = ft_strlen(s1);
+	len = 0;
+	while (s1[len] != '\n' && s1[len] != '\0')
+		len++;
 	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
 		return (0);
-	while (s1[i])
+	i = 0;
+	while (i < len)
 	{
 		ret[i] = s1[i];
 		i++;
 	}
 	ret[i] = '\0';
+	ft_strlcpy(s1, s1 + i, BUFFER_SIZE + 1);
 	return (ret);
 }
 
@@ -62,8 +68,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 	char	*ret;
 
-	if (!s1 || !s2)
-		return (0);
 	ret = malloc (sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!ret)
 		return (0);
@@ -82,6 +86,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	ret[j] = '\0';
 	free(s1);
+	free(s2);
 	return (ret);
 }
 

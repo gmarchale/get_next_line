@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:17:25 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/11/22 16:01:04 by gmarchal         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:50:47 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,18 @@ char *get_next_line(int fd)
 	int m;
 
 	end = 0;
+	i = 0;
 	j = 0;
 	m = 0;
+	
+	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
+		return (0);
 	my_line = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (!my_line)
 		return (0);
-	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE <1)
+	tmp = ft_strdup_mod(my_static);
+	if (!tmp)
 		return (0);
-	tmp = ft_strdup(my_static);
 	while (end != 1)
 	{
 		ft_bzero(my_buffer, BUFFER_SIZE + 1);
@@ -41,12 +45,10 @@ char *get_next_line(int fd)
 		i = 0;
 		while (my_buffer[i])
 		{
-			if (my_buffer[i] == '\n')
+			if (end != 1)
 			{
-				end = 1;
-			}
-			else if (end != 1)
-			{
+				if (my_buffer[i] == '\n')
+					end = 1;
 				my_line[j] = my_buffer[i];
 				j++;
 			}
@@ -58,8 +60,8 @@ char *get_next_line(int fd)
 			i++;
 		}
 		my_line[j] = '\0';
+		end = 1;
 	}
-	//printf("Ma static : %s\n", my_static); // delete
 	return (ft_strjoin(tmp, my_line));
 }
 
@@ -69,19 +71,20 @@ int main(void)
 	char *ligne;
 	char *ligne2;
 	char *ligne3;
-	char *ligne4;
+	//char *ligne4;
 
 	fd = open("text1.txt", O_RDONLY);
 	ligne = get_next_line(fd);
 	ligne2 = get_next_line(fd);
 	ligne3 = get_next_line(fd);
-	ligne4 = get_next_line(fd);
+	//ligne4 = get_next_line(fd);
 	printf("%s\n", ligne);
 	printf("%s\n", ligne2);
 	printf("%s\n", ligne3);
-	printf("%s\n", ligne4);
+	//printf("%s\n", ligne4);
 	free(ligne);
 	free(ligne2);
 	free(ligne3);
-	free(ligne4);
+	//free(ligne4);
 }
+
