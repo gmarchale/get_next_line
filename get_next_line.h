@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:39:49 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/11/23 14:38:11 by gmarchal         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:37:31 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ char	*ft_strdup_mod(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strlcpy(char *dst, const char *src, int size);
 char 	*get_next_line(int fd);
+char	*check_bn(char *str);
 
 #endif

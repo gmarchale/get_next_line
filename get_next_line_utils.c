@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:11:13 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/11/23 15:08:06 by gmarchal         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:09:30 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*ft_strdup_mod(char *s1)
 	ft_strlcpy(s1, s1 + i, BUFFER_SIZE + 1);
 	return (ret);
 }
-
 char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;

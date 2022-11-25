@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:17:25 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/11/23 16:50:47 by gmarchal         ###   ########.fr       */
+/*   Updated: 2022/11/25 17:37:27 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char *get_next_line(int fd)
 	char my_buffer[BUFFER_SIZE + 1];
 	char *my_line;
 	char *tmp;
+	int left_to_read;
 	int i;
 	int j;
 	int end;
@@ -32,16 +33,21 @@ char *get_next_line(int fd)
 	
 	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (0);
+	left_to_read = BUFFER_SIZE;
 	my_line = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (!my_line)
 		return (0);
+	while (my_static[i])
+	{
+
+	}
 	tmp = ft_strdup_mod(my_static);
 	if (!tmp)
 		return (0);
-	while (end != 1)
+	while (end != 1 && left_to_read > 0)
 	{
 		ft_bzero(my_buffer, BUFFER_SIZE + 1);
-		read(fd, my_buffer, BUFFER_SIZE);
+		left_to_read = read(fd, my_buffer, BUFFER_SIZE);
 		i = 0;
 		while (my_buffer[i])
 		{
@@ -62,29 +68,21 @@ char *get_next_line(int fd)
 		my_line[j] = '\0';
 		end = 1;
 	}
+	if (left_to_read == 0 && my_buffer[0] == '\0')
+		return (NULL);
 	return (ft_strjoin(tmp, my_line));
 }
 
 int main(void)
 {
-	int	fd;
+	int fd;
 	char *ligne;
-	char *ligne2;
-	char *ligne3;
-	//char *ligne4;
 
-	fd = open("text1.txt", O_RDONLY);
+	fd = open("test_file", O_RDONLY);
 	ligne = get_next_line(fd);
-	ligne2 = get_next_line(fd);
-	ligne3 = get_next_line(fd);
-	//ligne4 = get_next_line(fd);
-	printf("%s\n", ligne);
-	printf("%s\n", ligne2);
-	printf("%s\n", ligne3);
-	//printf("%s\n", ligne4);
-	free(ligne);
-	free(ligne2);
-	free(ligne3);
-	//free(ligne4);
+	while (ligne)
+	{
+		printf("%s", ligne);		
+		ligne = get_next_line(fd);
+	}
 }
-
