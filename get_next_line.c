@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:36:38 by gmarchal          #+#    #+#             */
-/*   Updated: 2022/12/19 11:42:17 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:42:10 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,77 @@
 #include <fcntl.h> // delete (pour open)
 #include <stdio.h> // delete
 
-char *get_next_line(int fd)
+static char	*ft_line(char *my_buffer, int *check, char *my_static)
+{
+	char	*my_line;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	my_line = malloc (sizeof(char) * (ft_strlen(my_buffer) + 1));
+	if (!my_line)
+		return (0);
+	while (my_buffer[i] && *check != 1)
+	{
+		if (my_buffer[i] == '\n')
+			*check = 1;
+		my_line[i] = my_buffer[i];
+		i++;
+	}
+	my_line[i] = '\0';
+	if (i == 0)
+		*check = 1;
+	while (my_buffer[i])
+		my_static[j++] = my_buffer[i++];
+	my_static[j] = '\0';
+	return (my_line);
+}
+
+char	*get_next_line(int fd)
 {
 	static char	my_static[BUFFER_SIZE + 1];
-	char		my_buffer[BUFFER_SIZE + 1];
+	int			check;
 	char		*my_line;
+	char		my_buffer[BUFFER_SIZE + 1];
 	char		*tmp;
-	int			i;
-	int			j;
 
+	check = 0;
 	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (0);
 	my_line = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (!my_line)
 		return (0);
-	tmp = ft_strdup_mod(my_static);
+	tmp = ft_strdup_mod(my_static, &check);
 	if (!tmp)
 		return (0);
-	my_line = ft_line(my_buffer)
-	/*
-	while (end != 1)
+	while (check == 0)
 	{
-		i = 0;
 		ft_bzero(my_buffer, BUFFER_SIZE + 1);
 		read(fd, my_buffer, BUFFER_SIZE);
-		while (my_buffer[i])
-		{
-			// continuer ici
-			// parcourt my_buffer et met tout dans my_line
-		}
+		// proteger read
+		my_line = ft_line(my_buffer, &check, my_static);
+		tmp = ft_strjoin(tmp, my_line);
 	}
-	*/
+	if (!tmp[0])
+		return (NULL);
+	return (tmp);
 }
 
-char	*ft_line(char *str)
+int	main(void)
 {
-	char *my_line;
+	int		fd;
+	char	*ligne;
 
-	my_line = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-	if (!my_line)
-		return (0);
-	ft_bzero(str, BUFFER_SIZE + 1);
-	read(fd, my_buffer, BUFFER_SIZE);
-	while (my_buffer[i])
+	fd = open("test_file", O_RDONLY);
+	ligne = get_next_line(fd);
+	while (ligne)
 	{
+		printf("%s", ligne);
+		free(ligne);
+		ligne = get_next_line(fd);
 	}
-	return (my_line);
+	free(ligne);
+	system("leaks a.out");
+	return (0);
 }
