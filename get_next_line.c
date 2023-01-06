@@ -6,13 +6,11 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:36:38 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/01/05 16:42:10 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:11:04 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h> // delete (pour open)
-#include <stdio.h> // delete
 
 static char	*ft_line(char *my_buffer, int *check, char *my_static)
 {
@@ -67,10 +65,12 @@ char	*get_next_line(int fd)
 		tmp = ft_strjoin(tmp, my_line);
 	}
 	if (!tmp[0])
-		return (NULL);
+		return (0);
 	return (tmp);
 }
 
+#include <fcntl.h> // delete (pour open)
+#include <stdio.h> // delete
 int	main(void)
 {
 	int		fd;

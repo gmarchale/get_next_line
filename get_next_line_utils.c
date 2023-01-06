@@ -6,29 +6,11 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:51:14 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/01/05 15:22:38 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:09:43 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int	ft_strlen_mod(char *str, int *check)
-{
-	int	i;
-
-	i = 0;
-	while (i < BUFFER_SIZE)
-	{
-		if (str[i] == '\0' || str[i] == '\n')
-		{
-			i++;
-			*check = 1;
-			break ;
-		}
-		i++;
-	}
-	return (i);
-}
 
 int	ft_strlen(const char *s)
 {
