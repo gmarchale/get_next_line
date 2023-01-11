@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:36:38 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/01/06 15:11:04 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:48:38 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ static char	*ft_line(char *my_buffer, int *check, char *my_static)
 	return (my_line);
 }
 
+static char	*ft_read(int fd, char *my_buffer)
+{
+	int	read_return;
+
+	read_return = 1;
+	ft_bzero(my_buffer, BUFFER_SIZE + 1);
+	read_return = read(fd, my_buffer, BUFFER_SIZE);
+	if (read_return == -1)
+	{
+		ft_bzero(my_buffer, BUFFER_SIZE + 1);
+		// free qq chose
+		return (0);
+	}
+	return (0);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	my_static[BUFFER_SIZE + 1];
@@ -58,11 +74,10 @@ char	*get_next_line(int fd)
 		return (0);
 	while (check == 0)
 	{
-		ft_bzero(my_buffer, BUFFER_SIZE + 1);
-		read(fd, my_buffer, BUFFER_SIZE);
-		// proteger read
+		ft_read(fd, my_buffer);
 		my_line = ft_line(my_buffer, &check, my_static);
 		tmp = ft_strjoin(tmp, my_line);
+		// ft_free(tmp, my_line);
 	}
 	if (!tmp[0])
 		return (0);
