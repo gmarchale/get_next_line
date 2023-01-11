@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:36:38 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/01/11 15:48:38 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:55:09 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static char	*ft_read(int fd, char *my_buffer)
 	if (read_return == -1)
 	{
 		ft_bzero(my_buffer, BUFFER_SIZE + 1);
-		// free qq chose
 		return (0);
 	}
 	return (0);
@@ -61,27 +60,23 @@ char	*get_next_line(int fd)
 	int			check;
 	char		*my_line;
 	char		my_buffer[BUFFER_SIZE + 1];
-	char		*tmp;
+	char		*str;
 
 	check = 0;
 	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (0);
-	my_line = malloc (sizeof(char) * (BUFFER_SIZE + 1));
-	if (!my_line)
-		return (0);
-	tmp = ft_strdup_mod(my_static, &check);
-	if (!tmp)
+	str = ft_strdup_mod(my_static, &check);
+	if (!str)
 		return (0);
 	while (check == 0)
 	{
 		ft_read(fd, my_buffer);
 		my_line = ft_line(my_buffer, &check, my_static);
-		tmp = ft_strjoin(tmp, my_line);
-		// ft_free(tmp, my_line);
+		str = ft_strjoin(str, my_line);
 	}
-	if (!tmp[0])
+	if (!str[0])
 		return (0);
-	return (tmp);
+	return (str);
 }
 
 #include <fcntl.h> // delete (pour open)
@@ -103,3 +98,4 @@ int	main(void)
 	system("leaks a.out");
 	return (0);
 }
+
