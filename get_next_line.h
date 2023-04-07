@@ -6,12 +6,17 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:28:30 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/01/06 15:09:55 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/04/07 20:34:13 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 16
+# endif
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
